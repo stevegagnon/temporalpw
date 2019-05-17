@@ -1,4 +1,3 @@
-lib/
-TODO.txt
-*.pyc
-*.bak.20*
+.cache/
+node_modules/
+dist/

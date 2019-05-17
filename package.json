@@ -1,0 +1,27 @@
+{
+  "name": "temporalpw",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.html",
+  "scripts": {
+    "serve": "parcel index.html"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "aes-js": "^3.1.2",
+    "bs58": "^4.0.1",
+    "jshashes": "^1.0.7",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "react-router": "^5.0.0",
+    "react-router-dom": "^5.0.0",
+    "safe-buffer": "^5.1.2"
+  },
+  "devDependencies": {
+    "@types/react": "^16.8.17",
+    "@types/react-router-dom": "^4.3.3",
+    "parcel-bundler": "^1.12.3",
+    "typescript": "^3.4.5"
+  }
+}
