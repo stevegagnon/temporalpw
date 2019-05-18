@@ -18,7 +18,7 @@ export async function storeCipher(cipher: string, days: number, myIp = false): P
   return (await response.json()).pw_id;
 }
 
-export async function retrieve(cipher_id: string): Promise<string> {
+export async function fetchCipher(cipher_id: string): Promise<string> {
   const response = await fetch(`https://temporal.pw/get/${cipher_id}`);
 
   return (await response.json()).cipher;
@@ -46,8 +46,23 @@ export function encrypt(secret: string) {
   return [cipher, encoded_key];
 };
 
+export function decrypt(cipher, key) {
+  var decoded_encrypted_bytes = Base58.decode( new Buffer(cipher) );
+               
+  // decode key ..
+  var decoded_key = Base58.decode( new Buffer(key) );
+  
+  // decrypt decoded password with decoded key ..
+  var aesCtr = new aesjs.ModeOfOperation.ctr( decoded_key, new aesjs.Counter( 5 ) );
+  var decrypted_bytes = aesCtr.decrypt( decoded_encrypted_bytes );
+  
+  // Convert our bytes back into text
+  return  aesjs.utils.utf8.convertBytesToString( decrypted_bytes );
+}
+
 export function createUrl(cipher_id, encoded_key) {
   const SHA256 = new Hashes.SHA256;
   const token = `${cipher_id}-${encoded_key}`;
-  return `https://Temporal.PW/p#${token}${SHA256.hex(token).substr(0, 2)}`;
+  const url = new URL(location.href);
+  return `${url.protocol}//${url.host}/#/p/${token}${SHA256.hex(token).substr(0, 2)}`;
 }

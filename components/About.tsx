@@ -1,8 +1,9 @@
 
 import * as React from 'react';
+import { RouteComponentProps } from '@reach/router';
 import Footer from './Footer';
 
-export default function About () {
+export default function About ({}: RouteComponentProps) {
   return (
     <div className="container">
       <h1>About <a href="/">Temporal.PW</a>:</h1><br />

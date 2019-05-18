@@ -1,7 +1,8 @@
 import * as React from 'react';
+import { RouteComponentProps } from '@reach/router';
 import Footer from './Footer';
 
-interface Props {
+interface Props extends RouteComponentProps {
   url: string;
 }
 

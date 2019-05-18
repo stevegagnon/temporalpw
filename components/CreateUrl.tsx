@@ -1,10 +1,13 @@
 import * as React from 'react';
-import { withRouter } from 'react-router-dom';
+import { RouteComponentProps } from '@reach/router';
 import Footer from './Footer';
 import { generatePassword } from '../lib/random-password';
-import { storeCipher, createUrl, encrypt } from '../lib/temporal-pw';
 
-export default withRouter(function CreateUrl({ history }) {
+interface Props extends RouteComponentProps {
+  onCreateUrl: (password: string, expireDays: number, useIpFilter: boolean) => void;
+}
+
+export default function CreateUrl({ onCreateUrl }: Props) {
   const [password, setPassword] = React.useState('');
   const [expireDays, setExpireDays] = React.useState(3);
   const [useIpFilter, setUseIpFilter] = React.useState(false);
@@ -13,14 +16,8 @@ export default withRouter(function CreateUrl({ history }) {
     setPassword(generatePassword());
   }
 
-  async function onCreateUrl() {
-    const [cipher, cipherKey] = encrypt(password);
-
-    const cipherId = await storeCipher(cipher, expireDays, useIpFilter);
-
-    const url = createUrl(cipherId, cipherKey);
-
-    console.log(url);
+  async function onClickCreateUrl() {
+    onCreateUrl(password, expireDays, useIpFilter);
   }
 
   return (
@@ -60,11 +57,11 @@ export default withRouter(function CreateUrl({ history }) {
         <small>(useful for sending a password to someone in the same office / network)</small>
       </label>
 
-      <button onClick={onCreateUrl}>Get temporary URL for this password</button>
+      <button onClick={onClickCreateUrl}>Get temporary URL for this password</button>
 
       <p>(Do not include any information that identifies what the password is for)</p>
 
       <Footer />
     </div>
   );
-});
+};
